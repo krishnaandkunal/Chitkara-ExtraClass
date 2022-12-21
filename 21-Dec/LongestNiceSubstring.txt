@@ -1,0 +1,21 @@
+class Solution {
+    public String longestNiceSubstring(String str) {
+        HashSet<Character> hs = new HashSet<Character>();
+        for(int i=0; i<str.length(); i++){
+            hs.add(str.charAt(i));
+        }
+        
+        for(int i=0; i<str.length(); i++){
+            char ch = str.charAt(i);
+            if(hs.contains(Character.toUpperCase(ch)) && hs.contains(Character.toLowerCase(ch)))
+                continue;
+            String x = longestNiceSubstring(str.substring(0,i));
+            String y = longestNiceSubstring(str.substring(i+1));
+            if(x.length()>=y.length())
+                return x;
+            else
+                return y;
+        }
+        return str;
+    }
+}
