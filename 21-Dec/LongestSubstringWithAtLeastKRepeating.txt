@@ -1,0 +1,48 @@
+class Solution {
+    public int longestSubstring(String str, int k) {
+        int maxU=getMaxUniqueLetters(str);
+        int ans=0;
+        
+        for(int c=1; c<=maxU; c++){
+            int[] f = new int[26];
+            int unq=0, rk=0,s=0,e=0;
+            while(e<str.length()){
+                // window expand
+                if(unq<=c){
+                    char ch = str.charAt(e);
+                    if(f[ch-'a']==0)
+                        unq++;
+                    f[ch-'a']++;
+                    if(f[ch-'a']==k)
+                        rk++;
+                    e++;
+                }
+                //window shrink
+                else{
+                    char ch = str.charAt(s);
+                    if(f[ch-'a']==k)
+                        rk--;
+                    f[ch-'a']--;
+                    if(f[ch-'a']==0)
+                        unq--;
+                    s++;
+                }
+                if(unq==c && rk==c){
+                    ans = Math.max(ans,e-s);
+                }
+            }
+        }
+        return ans;
+    }
+    int getMaxUniqueLetters(String s) {
+        boolean map[] = new boolean[26];
+        int maxUnique = 0;
+        for (int i = 0; i < s.length(); i++) {
+            if (!map[s.charAt(i) - 'a']) {
+                maxUnique++;
+                map[s.charAt(i) - 'a'] = true;
+            }
+        }
+        return maxUnique;
+    }
+}
