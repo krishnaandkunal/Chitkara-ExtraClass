@@ -1,0 +1,26 @@
+class Solution {
+    int idx=0;
+    public String decodeString(String s) {
+        StringBuilder res = new StringBuilder();
+        while(idx<s.length() && s.charAt(idx)!=']'){
+            if(!Character.isDigit(s.charAt(idx))){
+                res.append(s.charAt(idx));
+                idx++;
+            }
+            else{
+                int k=0;
+                while(idx<s.length() && Character.isDigit(s.charAt(idx))){
+                    k=k*10+s.charAt(idx)-'0';
+                    idx++;
+                }
+                idx++;
+                String dstr = decodeString(s);
+                idx++;
+                while(k-->0){
+                    res.append(dstr);
+                }
+            }
+        }
+        return new String(res);
+    }
+}

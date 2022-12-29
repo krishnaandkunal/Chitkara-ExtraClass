@@ -1,0 +1,21 @@
+class Solution {
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        List<List<Integer>> ans = new ArrayList<>();
+        List<Integer> temp = new ArrayList<>();
+        combination(candidates, target, ans, temp, 0);
+        return ans;
+    }
+    public void combination(int[] cand, int tar, List<List<Integer>> ans, List<Integer> temp, int idx) {
+        if(tar==0){
+            ans.add(new ArrayList(temp));
+            return;
+        }
+        for(int i=idx; i<cand.length; i++){
+            if(cand[i]<=tar){
+                temp.add(cand[i]);
+                combination(cand,tar-cand[i], ans, temp,i);
+                temp.remove(temp.size()-1);
+            }
+        }
+    }
+}
